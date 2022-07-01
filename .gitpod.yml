@@ -10,13 +10,12 @@ image:
 tasks:
   - before: |
       echo "Run some before tasks here"
+      exit
   - init: |
       echo "do the heavy lifting of installing your multirepo setup"
+      exit
   - command: |
       # runs the setup script compliments of the dockerfile
-      bash /home/gitpod/.aws/init.sh
-      echo "Authenticate below"
-      BROWSER='echo' aws sso login
 
 # List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
 ports:
