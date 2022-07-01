@@ -1,0 +1,24 @@
+image:
+  file: .gitpod.Dockerfile
+
+# multi-repo
+# additionalRepositories:
+#   - url: https://github.com/<redacted>/something
+#     checkoutLocation: something
+
+# List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - before: |
+      echo "Run some before tasks here"
+  - init: |
+      echo "do the heavy lifting of installing your multirepo setup"
+  - command: |
+      # runs the setup script compliments of the dockerfile
+      bash /home/gitpod/.aws/init.sh
+      echo "Authenticate below"
+      BROWSER='echo' aws sso login
+
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 3000
+    onOpen: open-preview
