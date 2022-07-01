@@ -67,3 +67,6 @@ jq '.credHelpers["public.ecr.aws"]="ecr-login"' /home/gitpod/.docker/config.json
 jq ".credHelpers[\"${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com\"]=\"ecr-login\"" /home/gitpod/.docker/config_tmp.json > /home/gitpod/.docker/config.json
 rm /home/gitpod/.docker/config_tmp.json
 
+echo "Start an AWS SSO login session"
+
+BROWSER="/ide/bin/helpers/browser.sh" aws sso login
