@@ -15,13 +15,13 @@ RUN chmod -R +x /usr/local/bin
 USER gitpod
 
 # below is an inline bash script to populate this container with a helper script to run at login
-
+# this is really a terrible idea and why aws_init.sh is used instead
 RUN <<'EOF' bash
 set -e
 
 # install ECR credential helper:
 ECR_LATEST=$(curl -s https://api.github.com/repos/awslabs/amazon-ecr-credential-helper/releases/latest | jq -r ".tag_name")
-curl -o docker-credential-ecr-login -fSsL "https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/${ECR_LATEST##*v}/linux-arm64/docker-credential-ecr-login"
+curl -o docker-credential-ecr-login -fSsL "https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/${ECR_LATEST##*v}/linux-amd64/docker-credential-ecr-login"
 sudo mv docker-credential-ecr-login /usr/local/bin/docker-credential-ecr-login
 sudo chmod +x /usr/local/bin/docker-credential-ecr-login
 
