@@ -69,4 +69,4 @@ rm /home/gitpod/.docker/config_tmp.json
 
 echo "Start an AWS SSO login session"
 
-BROWSER="/ide/bin/helpers/browser.sh" aws sso login
+BROWSER="gp preview" aws sso login
