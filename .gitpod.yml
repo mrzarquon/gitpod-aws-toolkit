@@ -9,9 +9,11 @@
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
   - command: |
-      bash aws_init.sh
+      # this will install all AWS tools and then open a browser window to authenticate your AWS session
+      bash $GITPOD_REPO_ROOT/aws_init.sh
+      # put things you want to do with AWS after this line
 
 # List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
-ports:
-  - port: 3000
-    onOpen: open-preview
+# ports:
+#   - port: 3000
+#     onOpen: open-preview
