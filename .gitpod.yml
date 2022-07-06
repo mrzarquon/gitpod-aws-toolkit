@@ -8,6 +8,11 @@
 
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
+  - before: |
+      gpgconf --kill gpg-agent
+      rm -rf /home/gitpod/.gnupg/S.gpg-agent
+      curl -fsSL https://openpgpkey.sneezingdog.com/.well-known/openpgpkey/sneezingdog.com/hu/jexrgxceciag7yppi57igp7m3shxc98r | gpg --import
+
   - command: |
       # this will install all AWS tools and then open a browser window to authenticate your AWS session
       bash $GITPOD_REPO_ROOT/aws_init.sh
