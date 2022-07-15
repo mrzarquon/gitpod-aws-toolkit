@@ -30,6 +30,21 @@ if [ ! -f /usr/local/bin/docker-credential-ecr-login ]; then
     rm -rf "${TMP_DIR}"
 fi
 
+# This should be moved to the workspace image, but we can shave that yak later.
+if ! command -v session-manager-plugin; then
+    echo "Installing AWS session manager plugin"
+
+      TMP_DIR="$(mktemp -d)"
+      cd "$TMP_DIR" || exit 1
+
+      curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
+      sudo dpkg -i "session-manager-plugin.deb"
+
+      cd "$OLD_DIR"
+      rm -rf "$TMP_DIR"
+fi
+
+
 AWS_VARS=(AWS_SSO_URL AWS_SSO_REGION AWS_ACCOUNT_ID AWS_ROLE_NAME AWS_REGION)
 
 for AWS_VAR in "${AWS_VARS[@]}"; do
