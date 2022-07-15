@@ -30,7 +30,17 @@ if [ ! -f /usr/local/bin/docker-credential-ecr-login ]; then
     rm -rf "${TMP_DIR}"
 fi
 
-if [ -z "$AWS_SSO_URL" ]; then
+AWS_VARS=(AWS_SSO_URL AWS_SSO_REGION AWS_ACCOUNT_ID AWS_ROLE_NAME AWS_REGION)
+
+for AWS_VAR in "${AWS_VARS[@]}"; do
+  echo "$AWS_VAR is ${!AWS_VAR}"
+    if [[ -z "${!AWS_VAR}" ]]; then
+        echo "Error: AWS variable \"$AWS_VAR\" is unset"
+        AWS_VAR_UNSET=true
+    fi
+done
+
+if ! [[ -z "$AWS_VAR_UNSET" ]]; then
     SCRIPT=$(realpath "$0")
     echo "AWS Variables are not set, skipping autoconfig of files"
     echo "Re-run ${SCRIPT} when AWS_ variables are set"
@@ -42,6 +52,7 @@ fi
 # This assumes the below variables have been configured for this repo in gitpod
 # https://www.gitpod.io/docs/environment-variables#using-the-account-settings
 echo "Forcing AWS config to just use SSO credentials"
+[[ -d /home/gitpod/.aws ]] || mkdir /home/gitpod/.aws
 cat <<- AWSFILE > /home/gitpod/.aws/config
 [default]
 sso_start_url = ${AWS_SSO_URL}
