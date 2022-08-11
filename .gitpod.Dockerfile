@@ -8,7 +8,10 @@ COPY --from=amazon/aws-cli:latest /usr/local/aws-cli/ /usr/local/aws-cli/
 # make sure we have these handy utilities
 RUN apt install -y inetutils-ping traceroute curl wget
 
-RUN chmod +x /usr/local/aws-cli/v2/current/bin/aws && ln -s /usr/local/aws-cli/v2/current/bin/aws /usr/local/bin/aws
+RUN chmod +x /usr/local/aws-cli/v2/current/bin/aws \
+    && ln -s /usr/local/aws-cli/v2/current/bin/aws /usr/local/bin/aws \
+    && curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | sudo tar -C /usr/local/bin -xzf - eksctl
+
 
 RUN chmod -R +x /usr/local/bin
 
